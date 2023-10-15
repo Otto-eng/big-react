@@ -1,1 +1,1 @@
-const ika = 12
+const ika = 12;
