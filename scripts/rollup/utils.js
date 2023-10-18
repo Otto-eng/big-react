@@ -9,23 +9,27 @@ const packpath = path.resolve(__dirname, '../../packages');
 const distpath = path.resolve(__dirname, '../../dist/node_modules');
 
 export function resolvePackageJSON(packName, isDist) {
-    if (isDist) {
-        return `${distpath}/${packName}`;
-    }
-    return `${packpath}/${packName}`;
+	if (isDist) {
+		return `${distpath}/${packName}`;
+	}
+	return `${packpath}/${packName}`;
 }
 
 export function getPackageJSON(packName) {
-    // 包路径
-    const path = `${resolvePackageJSON(packName)}/package.json`;
+	// 包路径
+	const path = `${resolvePackageJSON(packName)}/package.json`;
 
-    const str = fs.readFileSync(path, { encoding: 'utf-8' });
+	const str = fs.readFileSync(path, { encoding: 'utf-8' });
 
-    return JSON.parse(str);
+	return JSON.parse(str);
 }
 
-export function getBaseRollupPlugins({ alias = {
-    __DEV__: true
-}, typescript = {} } = {}) {
-    return [replace(alias), cjs(), ts(typescript)];
+export function getBaseRollupPlugins({
+	alias = {
+		__DEV__: true,
+		preventAssignment: true
+	},
+	typescript = {}
+} = {}) {
+	return [replace(alias), cjs(), ts(typescript)];
 }

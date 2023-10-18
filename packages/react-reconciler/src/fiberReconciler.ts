@@ -1,42 +1,40 @@
-
-
 import { Container } from 'hostConfig';
 import { FiberNode, FiberRootNode } from './fiber';
 import { HostRoot } from './workTags';
 import {
-    UpdateQueue,
-    createUpdate,
-    createUpdateQueue,
-    enqueueUpdate
+	UpdateQueue,
+	createUpdate,
+	createUpdateQueue,
+	enqueueUpdate
 } from './updateQueue';
 import { ReactElementType } from 'shared/ReactType';
 import { scheduleUpdateOnFiber } from './workLoop';
 
 // 创建 初始渲染 container
 export function createContainer(container: Container) {
-    const hostRootFiber = new FiberNode(HostRoot, {}, null);
-    const root = new FiberRootNode(container, hostRootFiber);
+	const hostRootFiber = new FiberNode(HostRoot, {}, null);
+	const root = new FiberRootNode(container, hostRootFiber);
 
-    hostRootFiber.updateQueue = createUpdateQueue();
+	hostRootFiber.updateQueue = createUpdateQueue();
 
-    return root;
+	return root;
 }
 
 // 更新 container
 export function updateContainer(
-    element: ReactElementType | null,
-    root: FiberRootNode
+	element: ReactElementType | null,
+	root: FiberRootNode
 ) {
-    const hostRootFiber = root.current;
+	const hostRootFiber = root.current;
 
-    const update = createUpdate<ReactElementType | null>(element);
+	const update = createUpdate<ReactElementType | null>(element);
 
-    enqueueUpdate(
-        hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
-        update
-    );
+	enqueueUpdate(
+		hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
+		update
+	);
 
-    scheduleUpdateOnFiber(hostRootFiber);
+	scheduleUpdateOnFiber(hostRootFiber);
 
-    return element;
+	return element;
 }
