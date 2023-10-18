@@ -19,14 +19,13 @@ export const commitMutationEffects = (finishedWork: FiberNode) => {
 			// 向下便利 不存在 mutation
 			nextEffect = child;
 		} else {
-			// 向上便利 DFS
+			// 向上遍历 DFS
 			up: while (nextEffect !== null) {
-				// 不存在 mutation 开始
 				commitMutationEffectsOnFiber(nextEffect);
 				const sibling: FiberNode | null = nextEffect.sibling;
+
 				if (sibling !== null) {
 					nextEffect = sibling;
-
 					break up;
 				}
 
@@ -51,15 +50,13 @@ const commitMutationEffectsOnFiber = (finishedWork: FiberNode) => {
 
 const commitPlacement = (finishedWork: FiberNode) => {
 	if (__DEV__) {
-		console.warn('执行placement操作--commitPlacement');
+		console.warn('执行Placement操作', finishedWork);
 	}
-
 	// parent DOM
 	const hostParent = getHostParent(finishedWork);
-
 	// finishedWork DOM append parent DOM
 	if (hostParent !== null) {
-		appendPlacementIntoContainer(finishedWork, hostParent);
+		appendPlacementNodeIntoContainer(finishedWork, hostParent);
 	}
 };
 
@@ -87,23 +84,24 @@ function getHostParent(fiber: FiberNode): Container | null {
 	return null;
 }
 
-export const appendPlacementIntoContainer = (
+function appendPlacementNodeIntoContainer(
 	finishedWork: FiberNode,
 	hostParent: Container
-) => {
-	if (finishedWork.tag == HostComponent || finishedWork.tag === HostText) {
+) {
+	// fiber host
+	if (finishedWork.tag === HostComponent || finishedWork.tag === HostText) {
 		appendChildToContainer(hostParent, finishedWork.stateNode);
 		return;
 	}
 
 	const child = finishedWork.child;
 	if (child !== null) {
-		appendPlacementIntoContainer(child, hostParent);
+		appendPlacementNodeIntoContainer(child, hostParent);
 		let sibling = child.sibling;
 
 		while (sibling !== null) {
-			appendPlacementIntoContainer(sibling, hostParent);
+			appendPlacementNodeIntoContainer(sibling, hostParent);
 			sibling = sibling.sibling;
 		}
 	}
-};
+}

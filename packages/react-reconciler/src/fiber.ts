@@ -7,7 +7,7 @@ export class FiberNode {
 	type: any;
 	tag: WorkTag;
 	pendingProps: Props;
-	key: any;
+	key: Key;
 	stateNode: any;
 	ref: Ref;
 
@@ -18,9 +18,7 @@ export class FiberNode {
 
 	memoizedProps: Props | null; // fiberNode 比较完成后的 props
 	memoizedState: any;
-
-	alternate: any;
-
+	alternate: FiberNode | null;
 	flags: Flags; // 标记
 	subtreeFlags: Flags;
 
@@ -30,24 +28,22 @@ export class FiberNode {
 		// 实例
 		this.tag = tag;
 		this.key = key;
+		// HostComponent <div> div DOM
 		this.stateNode = null;
+		// FunctionComponent () => {}
 		this.type = null;
-
 		// 构成树状结构
 		this.return = null; // 指向父fiberNode
 		this.sibling = null;
 		this.child = null;
 		this.index = 0;
 		this.ref = null;
-
 		// 作为工作单元
 		this.pendingProps = pendingProps;
 		this.memoizedProps = null;
-
 		this.alternate = null;
-
+		this.memoizedState = null;
 		this.updateQueue = null;
-
 		// 副作用
 		this.flags = NoFlags;
 		this.subtreeFlags = NoFlags;
@@ -97,14 +93,15 @@ export const createWorkInProgress = (
 };
 
 export function createFiberFromElement(element: ReactElementType): FiberNode {
-	const { type, key, props } = element;
 
+	const { type, key, props } = element;
 	let fiberTag: WorkTag = FunctionComponent;
 
 	if (typeof type === 'string') {
+		// <div/> type: 'div'
 		fiberTag = HostComponent;
 	} else if (typeof type !== 'function' && __DEV__) {
-		console.warn('未定义的type类型');
+		console.warn('为定义的type类型', element);
 	}
 
 	const fiber = new FiberNode(fiberTag, props, key);

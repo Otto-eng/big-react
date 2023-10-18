@@ -1,21 +1,21 @@
 export type Container = Element;
 export type Instance = Element;
 
-export function createInstance(type: string, _props: any): Instance {
-	// TODO:处理PROPS
+export const createInstance = (type: string, _props: any): Instance => {
+	// TODO: 处理props
 	const element = document.createElement(type);
 	return element;
-}
+};
 
-export function appendInitialChild(
+export const appendInitialChild = (
 	parent: Instance | Container,
 	child: Instance
-) {
+) => {
 	parent.appendChild(child);
-}
+};
 
-export function createTextInstance(content: string) {
+export const createTextInstance = (content: string) => {
 	return document.createTextNode(content);
-}
+};
 
 export const appendChildToContainer = appendInitialChild;

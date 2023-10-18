@@ -5,7 +5,9 @@ import ts from 'rollup-plugin-typescript2';
 import cjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 
+// eslint-disable-next-line no-undef
 const packpath = path.resolve(__dirname, '../../packages');
+// eslint-disable-next-line no-undef
 const distpath = path.resolve(__dirname, '../../dist/node_modules');
 
 export function resolvePackageJSON(packName, isDist) {

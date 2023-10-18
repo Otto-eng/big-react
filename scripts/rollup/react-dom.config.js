@@ -1,23 +1,19 @@
-import generatePackageJson from 'rollup-plugin-generate-package-json';
-
 import {
-	resolvePackageJSON,
 	getPackageJSON,
+	resolvePackageJSON,
 	getBaseRollupPlugins
 } from './utils';
-
+import generatePackageJson from 'rollup-plugin-generate-package-json';
 import alias from '@rollup/plugin-alias';
 
 const { name, module } = getPackageJSON('react-dom');
-
-// react-dom 包的路径
+// react-dom包的路径
 const pkgPath = resolvePackageJSON(name);
-
-// react-dom 产物路径
+// react-dom产物路径
 const pkgDistPath = resolvePackageJSON(name, true);
 
 export default [
-	// react
+	// react-dom
 	{
 		input: `${pkgPath}/${module}`,
 		output: [
@@ -41,19 +37,17 @@ export default [
 				}
 			}),
 			generatePackageJson({
-				InputFolder: pkgPath,
-				OutputFolder: pkgDistPath,
-				baseContents: ({ description, version }) => {
-					return {
-						name,
-						description,
-						peerDependencies: {
-							react: version
-						},
-						version,
-						main: 'index.js'
-					};
-				}
+				inputFolder: pkgPath,
+				outputFolder: pkgDistPath,
+				baseContents: ({ name, description, version }) => ({
+					name,
+					description,
+					version,
+					peerDependencies: {
+						react: version
+					},
+					main: 'index.js'
+				})
 			})
 		]
 	}
