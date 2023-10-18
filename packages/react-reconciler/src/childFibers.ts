@@ -4,7 +4,7 @@ import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbol';
 import { HostText } from './workTags';
 import { Placement } from './fiberFlags';
 
-function ChildReconceler(shouldTrackEffects: boolean) {
+function ChildReconciler(shouldTrackEffects: boolean) {
 	function reconcileSingleElement(
 		returnFiber: FiberNode,
 		_currentFiber: FiberNode | null,
@@ -80,5 +80,5 @@ function ChildReconceler(shouldTrackEffects: boolean) {
 	};
 }
 
-export const reconcelerChildFibers = ChildReconceler(true);
-export const mountChildFibers = ChildReconceler(false);
+export const reconcileChildFibers = ChildReconciler(true);
+export const mountChildFibers = ChildReconciler(false);

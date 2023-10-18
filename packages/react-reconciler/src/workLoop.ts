@@ -1,4 +1,4 @@
-import { beginWOrk } from './beginWork';
+import { beginWork } from './beginWork';
 import { commitMutationEffects } from './commitWork';
 import { completeWork } from './completeWork';
 import { FiberNode, FiberRootNode, createWorkInProgress } from './fiber';
@@ -105,7 +105,7 @@ function workLoop() {
 
 // fiber向下找寻 子 fiberNode 更换 props 状态 若未找到子fiberNode 则开始归
 function performUnitOfWork(fiber: FiberNode) {
-	const next = beginWOrk(fiber);
+	const next = beginWork(fiber);
 	fiber.memoizedProps = fiber.pendingProps;
 	if (next === null) {
 		completeUnitOfWork(fiber);

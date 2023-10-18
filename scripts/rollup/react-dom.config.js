@@ -23,12 +23,12 @@ export default [
 		output: [
 			{
 				file: `${pkgDistPath}/index.js`,
-				name: 'ReactDOM',
+				name: 'index.js',
 				format: 'umd'
 			},
 			{
 				file: `${pkgDistPath}/client.js`,
-				name: 'client',
+				name: 'client.js',
 				format: 'umd'
 			}
 		],
@@ -43,7 +43,7 @@ export default [
 			generatePackageJson({
 				InputFolder: pkgPath,
 				OutputFolder: pkgDistPath,
-				baseContents: ({ description, version, ...rest }) => {
+				baseContents: ({ description, version }) => {
 					return {
 						name,
 						description,

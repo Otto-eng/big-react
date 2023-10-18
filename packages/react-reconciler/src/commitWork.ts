@@ -75,7 +75,7 @@ function getHostParent(fiber: FiberNode): Container | null {
 		}
 
 		if (parentTag === HostRoot) {
-			return (fiber.stateNode as FiberRootNode).container;
+			return (parent.stateNode as FiberRootNode).container;
 		}
 
 		parent = parent.return;
