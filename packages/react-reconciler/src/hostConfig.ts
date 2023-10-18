@@ -14,3 +14,7 @@ export function createTextInstance(...props: any) {
 export function appendInitialChild(...props: any) {
     return {} as any
 }
+
+export function appendChildToContainer(...props: any) {
+    return {} as any
+}
