@@ -8,7 +8,12 @@ import {
 	createInstance,
 	createTextInstance
 } from 'hostConfig';
-import { HostRoot, HostComponent, HostText } from './workTags';
+import {
+	HostRoot,
+	HostComponent,
+	HostText,
+	FunctionComponent
+} from './workTags';
 
 export const completeWork = (wip: FiberNode) => {
 	// 构建离屏DOM树
@@ -36,6 +41,11 @@ export const completeWork = (wip: FiberNode) => {
 
 			bubbleProperties(wip);
 			return null;
+
+		case FunctionComponent:
+			bubbleProperties(wip);
+			return null;
+
 		case HostText:
 			if (current !== null && wip.stateNode) {
 				// update

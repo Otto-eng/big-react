@@ -93,7 +93,6 @@ export const createWorkInProgress = (
 };
 
 export function createFiberFromElement(element: ReactElementType): FiberNode {
-
 	const { type, key, props } = element;
 	let fiberTag: WorkTag = FunctionComponent;
 
